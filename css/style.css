@@ -1,0 +1,64 @@
+#voilà {
+	position:fixed;
+	height: 100vh;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	background: black;
+	z-index: 9999;
+}
+
+#loadingSpinner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 120px;
+    height: 120px;
+    margin: -76px 0 0 -76px;
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-radius: 50%;
+    border-top: 16px solid #3498db; /* Blue */
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ---- For creating the map - Height REQUIRED ---------------------------------------------------------------------- */
+#map {
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+/* ------------------------------------------------------------------------------------------------------------------ */
+
+#countrySelect {
+  width: 200px;
+  margin: 0 auto;
+}
+
+#selectContainer {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  padding: 11px 0;
+}
+
+.form-check-label {
+    color: whitesmoke;
+}
+
+
+.switchLabel {
+    text-shadow: 0 0 5px black;
+}
+
+#switchLayers {
+  height: 26px; 
+  width: 26px;  
+}
