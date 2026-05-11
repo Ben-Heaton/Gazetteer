@@ -127,10 +127,11 @@
     } else {
         foreach ($decoded['results'] as $article) {
             array_push($infoArray, [
-                "imageUrl" => $article['image_url'],
-                "title" => $article['title'],
-                "link" => $article['link'],
-                "description" => $article['description']
+				"link" => $article['link'],
+				"title" => $article['title'],
+                "description" => $article['description'],
+				"imageUrl" => $article['image_url'],
+				"source" => $article['source_name']
             ]);
         }
     }

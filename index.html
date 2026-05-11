@@ -70,82 +70,76 @@
                         </div>
                         <br>
                         
-                        <table class="table table-striped">
+                        <table class="table">
                                                         
                             <tr><!-- Country Name -->
-                                <td class="text-center"><i class="fa-solid fa-globe fa-xl text-success"></i></td>
-                                <td>Country Name</td>
-                                <td class="text-end" id="countryName">---</td>
+                                <td class="text-start"><i class="fa-solid fa-globe fa-xl text-success"></i> Country Name</td>
+                                <td class="text-end" id="countryName" colspan="2">---</td>
                             </tr>
                             
-                            <tr><!-- Continent, TEMPLATE FROM CODEPEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-                                <td class="text-center"><i class="fa-solid fa-earth-americas fa-xl text-success"></i></td>
-                                <td>Continent</td>
-                                <td class="text-end" id="continent">---</td>
+                            <tr><!-- Continent -->
+                                <td class="text-start"><i class="fa-solid fa-earth-americas fa-xl text-success"></i> Continent</td>
+                                <td class="text-end" id="continent" colspan="2">---</td>
                             </tr>
 
                             <tr><!-- Capital City -->
-                                <td class="text-center"><i class="fa-solid fa-tree-city fa-xl text-success"></i></td>
-                                <td>Capital City</td>
-                                <td class="text-end" id="capital">---</td>
+                                <td class="text-start"><i class="fa-solid fa-tree-city fa-xl text-success"></i> Capital City</td>
+                                <td class="text-end" id="capital" colspan="2">---</td>
                             </tr>
 
-                            <tr><!-- Languages, TEMPLATE FROM CODEPEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-                                <td class="text-center"><i class="fa-solid fa-comments fa-xl text-success"></i></td>
-                                <td>Languages</td>
-                                <td class="text-end" id="languages">---</td>
+                            <tr><!-- Languages -->
+                                <td class="text-start"><i class="fa-solid fa-comments fa-xl text-success"></i> Languages</td>
+                                <td class="text-end" id="languages" colspan="2">---</td>
                             </tr>
 
-                            <tr><!-- ISO_A2 Code, TEMPLATE FROM CODEPEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-                                <td class="text-center"><i class="fa-solid fa-2 fa-xl text-success"></i></td>
-                                <td>ISO Alpha Two Code</td>
-                                <td class="text-end" id="isoA2Code">---</td>
+                            <tr><!-- ISO_A2 Code -->
+                                <td class="text-start"><i class="fa-solid fa-2 fa-xl text-success"></i> ISO Alpha Two Code</td>
+                                <td class="text-end" id="isoA2Code" colspan="2">---</td>
                             </tr>
 
-                            <tr><!-- ISO_A3 Code, TEMPLATE FROM CODEPEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-                                <td class="text-center"><i class="fa-solid fa-3 fa-xl text-success"></i></td>
-                                <td>ISO Alpha Three Code</td>
-                                <td class="text-end" id="isoA3Code">---</td>
+                            <tr><!-- ISO_A3 Code -->
+                                <td class="text-start"><i class="fa-solid fa-3 fa-xl text-success"></i> ISO Alpha Three Code</td>
+                                <td class="text-end" id="isoA3Code" colspan="2">---</td>
                             </tr>
 
-                            <tr><!-- Area, TEMPLATE FROM CODEPEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-                                <td class="text-center"><i class="fa-solid fa-ruler-combined fa-xl text-success"></i></td>
-                                <td class="text-nowrap">Area (km<sup>2</sup>)</td>
-                                <td class="text-end" id="areaInSqKm">---</td>
+                            <tr><!-- Area -->
+                                <td class="text-start"><i class="fa-solid fa-ruler-combined fa-xl text-success"></i> Area (km<sup>2</sup>)</td>
+                                <td class="text-end" id="areaInSqKm" colspan="2">---</td>
                             </tr>
 
                             <tr><!-- Population -->
-                                <td class="text-center"><i class="fa-solid fa-people-group fa-xl text-success"></i></td>
-                                <td>Population</td>
-                                <td class="text-end" id="population">---</td>
+                                <td class="text-start"><i class="fa-solid fa-people-group fa-xl text-success"></i> Est. Population</td>
+                                <td class="text-end" id="population" colspan="2">---</td>
                             </tr>
                             
                             <tr><!-- Currency -->
-                                <td class="text-center"><i class="fa-solid fa-money-bill fa-xl text-success"></i></td>
-                                <td>Currency</td>
-                                <td class="text-end" id="currencyCode">---</td>
+                                <td class="text-start"><i class="fa-solid fa-money-bill fa-xl text-success"></i> Currency Code</td>
+                                <td class="text-end" id="currencyCode" colspan="2">---</td>
                             </tr>
                                                         
                             <tr><!-- Fun Fact -->
-                                <td class="text-center"><i class="fa-solid fa-book-atlas fa-xl text-success"></i></td>
-                                <td>Fun Fact</td>
-                                <td class="text-end" id="funFact">---</td>
+                                <td class="text-start"><i class="fa-solid fa-book-atlas fa-xl text-success"></i> Fun Fact</td>
+                                <td><!-- N/A --></td>
+								<td><!-- N/A --></td>
+                            </tr>
+							
+                            <tr><!-- Fun Fact cont.-->
+                                <td class="text-center" id="funFact" colspan='3'>---</td>
                             </tr>
                             
-                            <tr><!-- Current Weather (Capital) -->
-                                <td ><i class="fa-solid fa-cloud fa-xl text-success"></i></td>
-                                <td>Current Weather - <span id="weatherCity"></span></td>
-                                <td><!-- N/A --></td>
+                            <tr><!-- Current Weather -->
+                                <td><i class="fa-solid fa-cloud fa-xl text-success"></i> Current Weather</td>
+                                <td class="text-end" colspan='2'><span id="weatherCity"></span></td>
                             </tr>
-                            <tr>
-                                <td><!-- N/A --></td>
-                                <td class="text-center" ><img id="weatherIcon" src="" alt="weatherIcon"></td>
-                                <td class="text-center" id="weatherMain">---</td>
-                                <td class="text-center" id="weatherTemp">---</td>
-                            </tr>
-                            
+							
+							<tr><!-- Current Weather cont. -->
+								<td class="text-center"><img id="weatherIcon" src="" alt="weatherIcon"></td>
+								<td class="align-middle" id="weatherMain">---</td>
+								<td class="align-middle"><span id="weatherTemp"></span>&#8451</td>
+							</tr>
+							                            
                         </table>
-                    
+						                    
                     </div>
 
                     <!-- Modal footer -->
@@ -157,7 +151,7 @@
             </div>
         </div><!-- End of countryInfo modal -->
 
-        <!---- currencyExchange modal ---- FINISH! ------------------------------------------------------------------------------------------------------------------------>
+        <!---- currencyExchange modal ------------------------------------------------------------------------------------------------------------------------------------->
         <div class="modal" id="currencyExchangeModal">
             <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered">
                 <div class="modal-content shadow">
@@ -213,57 +207,53 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
+					
+						<table class="table">
+							
+							<!-- Today -->
+							<tr>
+								<td class="align-middle" id="forecastTodayDate"></td>                            
+								<td><img id="forecastTodayIcon" src="" alt="weatherForecastIcon"></td>
+								<td class="align-middle" id="forecastTodayMain"></td>
+								<td class="align-middle"><span id="forecastTodayTemp"></span>&#8451</td>
+							</tr>
+
+							<!-- Tomorrow -->
+							<tr>
+								<td class="align-middle" id="forecastTomorrowDate"></td>                            
+								<td><img id="forecastTomorrowIcon" src="" alt="weatherForecastIcon"></td>
+								<td class="align-middle" id="forecastTomorrowMain"></td>
+								<td class="align-middle"><span id="forecastTomorrowTemp"></span>&#8451</td>
+							</tr>
+
+							<!-- Day 3 -->
+							<tr>
+								<td class="align-middle" id="forecastDay3Date"></td>                            
+								<td><img id="forecastDay3Icon" src="" alt="weatherForecastIcon"></td>
+								<td class="align-middle" id="forecastDay3Main"></td>
+								<td class="align-middle"><span id="forecastDay3Temp"></span>&#8451</td>
+							</tr>
+
+							<!-- Day 4 -->
+							<tr>
+								<td class="align-middle" id="forecastDay4Date"></td>                            
+								<td><img id="forecastDay4Icon" src="" alt="weatherForecastIcon"></td>
+								<td class="align-middle" id="forecastDay4Main"></td>
+								<td class="align-middle"><span id="forecastDay4Temp"></span>&#8451</td>
+							</tr>
+
+							<!-- Day 5 -->
+							<tr>
+								<td class="align-middle" id="forecastDay5Date"></td>                            
+								<td><img id="forecastDay5Icon" src="" alt="weatherForecastIcon"></td>
+								<td class="align-middle" id="forecastDay5Main"></td>
+								<td class="align-middle"><span id="forecastDay5Temp"></span>&#8451</td>
+							</tr>
+
+						</table>
                         
-                        <!-- Today -->
-                        <div class="row">
-                            <div class="row" id="forecastTodayDate"></div>                            
-                            <div class="row">
-                                <div class="col"><img id="forecastTodayIcon" src="" alt="weatherForecastIcon"></div>
-                                <div class="col" id="forecastTodayMain"></div>
-                                <div class="col" id="forecastTodayTemp"></div>
-                            </div>                            
-                        </div>
-
-                        <!-- Tomorrow -->
-                        <div class="row">
-                            <div class="row" id="forecastTomorrowDate"></div>                            
-                            <div class="row">
-                                <div class="col"><img id="forecastTomorrowIcon" src="" alt="weatherForecastIcon"></div>
-                                <div class="col" id="forecastTomorrowMain"></div>
-                                <div class="col" id="forecastTomorrowTemp"></div>
-                            </div>                            
-                        </div>
-
-                        <!-- Day 3 -->
-                        <div class="row">
-                            <div class="row" id="forecastDay3Date"></div>                            
-                            <div class="row">
-                                <div class="col"><img id="forecastDay3Icon" src="" alt="weatherForecastIcon"></div>
-                                <div class="col" id="forecastDay3Main"></div>
-                                <div class="col" id="forecastDay3Temp"></div>
-                            </div>                            
-                        </div>
-
-                        <!-- Day 4 -->
-                        <div class="row">
-                            <div class="row" id="forecastDay4Date"></div>                            
-                            <div class="row">
-                                <div class="col"><img id="forecastDay4Icon" src="" alt="weatherForecastIcon"></div>
-                                <div class="col" id="forecastDay4Main"></div>
-                                <div class="col" id="forecastDay4Temp"></div>
-                            </div>                            
-                        </div>
-
-                        <!-- Day 5 -->
-                        <div class="row">
-                            <div class="row" id="forecastDay5Date"></div>                            
-                            <div class="row">
-                                <div class="col"><img id="forecastDay5Icon" src="" alt="weatherForecastIcon"></div>
-                                <div class="col" id="forecastDay5Main"></div>
-                                <div class="col" id="forecastDay5Temp"></div>
-                            </div>                            
-                        </div>
-
+                    </div>
+                    
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-success btn-sm" data-bs-dismiss="modal">Close</button>
@@ -273,7 +263,7 @@
             </div>
         </div><!-- End of weatherForecast modal -->
 
-        <!---- countryNews modal ---- FINISH! ------------------------------------------------------------------------------------------------------------------------>
+        <!---- countryNews modal ------------------------------------------------------------------------------------------------------------------------------------------>
         <div class="modal" id="countryNewsModal">
             <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered">
                 <div class="modal-content shadow">
@@ -286,48 +276,216 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-        
-                        <!-- first item -->          
-                        
-                        <table class="table table-borderless">
-                            
-                            <tr>
-                                <td rowspan="2" width="50%">
-                                    <img class="img-fluid rounded" src="https://ichef.bbci.co.uk/news/240/cpsprodpb/14498/production/_130069038_gettyimages-519726116.jpg" alt="" title="">
-                                </td>
 
-                                <td>
-                                    <a href="https://www.bbc.co.uk/news/entertainment-arts-65881813" class="fw-bold fs-6 text-black" target="_blank">Sir Paul McCartney says AI has enabled a 'final' Beatles song</a>
-                                </td>
-                            </tr>
-                            
-                            <tr>     
-                                <td class="align-bottom pb-0">
-                                    <p class="fw-light fs-6 mb-1">BBC News</p>
-                                </td>            
-                            </tr>
-                            <hr>
-                            
-                        </table>    
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered" id="holidaysTable">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                    </tr>
-                                </thead>
-                                
-                                <tbody id=holidaysTableBody></tbody>
-
-                            </table>
-
+                        <!-- News Item 1 -->
+						<div class="row py-1">
+							<div class="col text-center">
+								<h6 id="newsSource_1"></h6>
+							</div>
+						</div>
+						<div class="row py-1">
+                            <div class="col">
+                                <img class="img-fluid rounded" id="newsImage_1" src="" alt="news image">
+                            </div>
+                            <div class="col">
+                                <a href="" class="fw-bold fs-6 text-black" id="newsHeadline_1" target="_blank"></a>
+                            </div>
                         </div>
+						<div class="row pt-2">
+						    <div class="col">
+                                <p class="fw-light fs-6 mb-1" id="newsDesc_1"></p>
+                            </div>
+						</div>
+						<hr>
+						
+                        <!-- News Item 2 -->
+						<div class="row py-1">
+							<div class="col text-center">
+								<h6 id="newsSource_2"></h6>
+							</div>
+						</div>
+						<div class="row py-1">
+                            <div class="col">
+                                <img class="img-fluid rounded" id="newsImage_2" src="" alt="news image">
+                            </div>
+                            <div class="col">
+                                <a href="" class="fw-bold fs-6 text-black" id="newsHeadline_2" target="_blank"></a>
+                            </div>
+                        </div>
+						<div class="row pt-2">
+						    <div class="col">
+                                <p class="fw-light fs-6 mb-1" id="newsDesc_2"></p>
+                            </div>
+						</div>
+						<hr>
+						
+                        <!-- News Item 3 -->
+						<div class="row py-1">
+							<div class="col text-center">
+								<h6 id="newsSource_3"></h6>
+							</div>
+						</div>
+						<div class="row py-1">
+                            <div class="col">
+                                <img class="img-fluid rounded" id="newsImage_3" src="" alt="news image">
+                            </div>
+                            <div class="col">
+                                <a href="" class="fw-bold fs-6 text-black" id="newsHeadline_3" target="_blank"></a>
+                            </div>
+                        </div>
+						<div class="row pt-2">
+						    <div class="col">
+                                <p class="fw-light fs-6 mb-1" id="newsDesc_3"></p>
+                            </div>
+						</div>
+						<hr>
+						
+                        <!-- News Item 4 -->
+						<div class="row py-1">
+							<div class="col text-center">
+								<h6 id="newsSource_4"></h6>
+							</div>
+						</div>
+						<div class="row py-1">
+                            <div class="col">
+                                <img class="img-fluid rounded" id="newsImage_4" src="" alt="news image">
+                            </div>
+                            <div class="col">
+                                <a href="" class="fw-bold fs-6 text-black" id="newsHeadline_4" target="_blank"></a>
+                            </div>
+                        </div>
+						<div class="row pt-2">
+						    <div class="col">
+                                <p class="fw-light fs-6 mb-1" id="newsDesc_4"></p>
+                            </div>
+						</div>
+						<hr>
+						
+                        <!-- News Item 5 -->
+						<div class="row py-1">
+							<div class="col text-center">
+								<h6 id="newsSource_5"></h6>
+							</div>
+						</div>
+						<div class="row py-1">
+                            <div class="col">
+                                <img class="img-fluid rounded" id="newsImage_5" src="" alt="news image">
+                            </div>
+                            <div class="col">
+                                <a href="" class="fw-bold fs-6 text-black" id="newsHeadline_5" target="_blank"></a>
+                            </div>
+                        </div>
+						<div class="row pt-2">
+						    <div class="col">
+                                <p class="fw-light fs-6 mb-1" id="newsDesc_5"></p>
+                            </div>
+						</div>
+						<hr>
+						
+                        <!-- News Item 6 -->
+						<div class="row py-1">
+							<div class="col text-center">
+								<h6 id="newsSource_6"></h6>
+							</div>
+						</div>
+						<div class="row py-1">
+                            <div class="col">
+                                <img class="img-fluid rounded" id="newsImage_6" src="" alt="news image">
+                            </div>
+                            <div class="col">
+                                <a href="" class="fw-bold fs-6 text-black" id="newsHeadline_6" target="_blank"></a>
+                            </div>
+                        </div>
+						<div class="row pt-2">
+						    <div class="col">
+                                <p class="fw-light fs-6 mb-1" id="newsDesc_6"></p>
+                            </div>
+						</div>
+						<hr>
+						
+                        <!-- News Item 7 -->
+						<div class="row py-1">
+							<div class="col text-center">
+								<h6 id="newsSource_7"></h6>
+							</div>
+						</div>
+						<div class="row py-1">
+                            <div class="col">
+                                <img class="img-fluid rounded" id="newsImage_7" src="" alt="news image">
+                            </div>
+                            <div class="col">
+                                <a href="" class="fw-bold fs-6 text-black" id="newsHeadline_7" target="_blank"></a>
+                            </div>
+                        </div>
+						<div class="row pt-2">
+						    <div class="col">
+                                <p class="fw-light fs-6 mb-1" id="newsDesc_7"></p>
+                            </div>
+						</div>
+						<hr>
+						
+                        <!-- News Item 8 -->
+						<div class="row py-1">
+							<div class="col text-center">
+								<h6 id="newsSource_8"></h6>
+							</div>
+						</div>
+						<div class="row py-1">
+                            <div class="col">
+                                <img class="img-fluid rounded" id="newsImage_8" src="" alt="news image">
+                            </div>
+                            <div class="col">
+                                <a href="" class="fw-bold fs-6 text-black" id="newsHeadline_8" target="_blank"></a>
+                            </div>
+                        </div>
+						<div class="row pt-2">
+						    <div class="col">
+                                <p class="fw-light fs-6 mb-1" id="newsDesc_8"></p>
+                            </div>
+						</div>
+						<hr>
+						
+                        <!-- News Item 9 -->
+						<div class="row py-1">
+							<div class="col text-center">
+								<h6 id="newsSource_9"></h6>
+							</div>
+						</div>
+						<div class="row py-1">
+                            <div class="col">
+                                <img class="img-fluid rounded" id="newsImage_9" src="" alt="news image">
+                            </div>
+                            <div class="col">
+                                <a href="" class="fw-bold fs-6 text-black" id="newsHeadline_9" target="_blank"></a>
+                            </div>
+                        </div>
+						<div class="row pt-2">
+						    <div class="col">
+                                <p class="fw-light fs-6 mb-1" id="newsDesc_9"></p>
+                            </div>
+						</div>
+						<hr>
+						
+                        <!-- News Item 10 -->
+						<div class="row py-1">
+							<div class="col text-center">
+								<h6 id="newsSource_10"></h6>
+							</div>
+						</div>
+						<div class="row py-1">
+                            <div class="col">
+                                <img class="img-fluid rounded" id="newsImage_10" src="" alt="news image">
+                            </div>
+                            <div class="col">
+                                <a href="" class="fw-bold fs-6 text-black" id="newsHeadline_10" target="_blank"></a>
+                            </div>
+                        </div>
+						<div class="row pt-2">
+						    <div class="col">
+                                <p class="fw-light fs-6 mb-1" id="newsDesc_10"></p>
+                            </div>
+						</div>
+						
                     </div>
 
                     <!-- Modal footer -->
@@ -351,13 +509,14 @@
                     </div>
 
                     <!-- Modal body -->
-                    <div class="modal-body">
+                    <div class="modal-body" id="wikis">
 
                         <div class="row" id="wiki_1">
                             <div class="col text-center">
                                 <img class="wikiThumbs" id="wikiThumb_1" src="">
-                                <br>
+                                <br><br>
                                 <a class="countryData" id="wikiLink_1" href="" target="_blank">---</a>
+								<p class="countryData" id="wikiDesc_1">---</p>
                             </div>
                         </div>
                         <hr>
@@ -365,8 +524,9 @@
                         <div class="row" id="wiki_2">
                             <div class="col text-center">
                                 <img class="wikiThumbs" id="wikiThumb_2" src="">
-                                <br>
+                                <br><br>
                                 <a class="countryData" id="wikiLink_2" href="" target="_blank">---</a>
+								<p class="countryData" id="wikiDesc_2">---</p>
                             </div>
                         </div>
                         <hr>
@@ -374,8 +534,9 @@
                         <div class="row" id="wiki_3">
                             <div class="col text-center">
                                 <img class="wikiThumbs" id="wikiThumb_3" src="">
-                                <br>
+                                <br><br>
                                 <a class="countryData" id="wikiLink_3" href="" target="_blank">---</a>
+								<p class="countryData" id="wikiDesc_3">---</p>
                             </div>
                         </div>
                         <hr>
@@ -383,8 +544,9 @@
                         <div class="row" id="wiki_4">
                             <div class="col text-center">
                                 <img class="wikiThumbs" id="wikiThumb_4" src="">
-                                <br>
+                                <br><br>
                                 <a class="countryData" id="wikiLink_4" href="" target="_blank">---</a>
+								<p class="countryData" id="wikiDesc_4">---</p>
                             </div>
                         </div>
                         <hr>
@@ -392,8 +554,9 @@
                         <div class="row" id="wiki_5">
                             <div class="col text-center">
                                 <img class="wikiThumbs" id="wikiThumb_5" src="">
-                                <br>
+                                <br><br>
                                 <a class="countryData" id="wikiLink_5" href="" target="_blank">---</a>
+								<p class="countryData" id="wikiDesc_5">---</p>
                             </div>
                         </div>
                         <hr>
@@ -401,8 +564,9 @@
                         <div class="row" id="wiki_6">
                             <div class="col text-center">
                                 <img class="wikiThumbs" id="wikiThumb_6" src="">
-                                <br>
+                                <br><br>
                                 <a class="countryData" id="wikiLink_6" href="" target="_blank">---</a>
+								<p class="countryData" id="wikiDesc_6">---</p>
                             </div>
                         </div>
                         <hr>
@@ -410,8 +574,9 @@
                         <div class="row" id="wiki_7">
                             <div class="col text-center">
                                 <img class="wikiThumbs" id="wikiThumb_7" src="">
-                                <br>
+                                <br><br>
                                 <a class="countryData" id="wikiLink_7" href="" target="_blank">---</a>
+								<p class="countryData" id="wikiDesc_7">---</p>
                             </div>
                         </div>
                         <hr>
@@ -419,8 +584,9 @@
                         <div class="row" id="wiki_8">
                             <div class="col text-center">
                                 <img class="wikiThumbs" id="wikiThumb_8" src="">
-                                <br>
+                                <br><br>
                                 <a class="countryData" id="wikiLink_8" href="" target="_blank">---</a>
+								<p class="countryData" id="wikiDesc_8">---</p>
                             </div>
                         </div>
                         <hr>
@@ -428,8 +594,9 @@
                         <div class="row" id="wiki_9">
                             <div class="col text-center">
                                 <img class="wikiThumbs" id="wikiThumb_9" src="">
-                                <br>
+                                <br><br>
                                 <a class="countryData" id="wikiLink_9" href="" target="_blank">---</a>
+								<p class="countryData" id="wikiDesc_9">---</p>
                             </div>
                         </div>
                         <hr>
@@ -437,13 +604,17 @@
                         <div class="row" id="wiki_10">
                             <div class="col text-center">
                                 <img class="wikiThumbs" id="wikiThumb_10" src="">
-                                <br>
+                                <br><br>
                                 <a class="countryData" id="wikiLink_10" href="" target="_blank">---</a>
+								<p class="countryData" id="wikiDesc_10">---</p>
                             </div>
                         </div>
-                        <hr>
 
                     </div>
+					
+					<div class="modal-body" id="wikisError">
+						<h6 class="text-center">Sorry. No data is available at this time.</h6>
+					</div>
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
@@ -527,17 +698,16 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <div class="table-responsive">
                             <table class="table table-striped table-bordered" id="holidaysTable">
                                 <thead>
-                                    <tr>
+                                    <tr class="text-center">
                                         <th>Date</th>
                                         <th>Name</th>
                                         <th>Description</th>
                                     </tr>
                                 </thead>
                                 
-                                <tbody id=holidaysTableBody></tbody>
+                                <tbody class="text-center" id=holidaysTableBody></tbody>
 
                             </table>
 
@@ -572,83 +742,83 @@
                         <div class="text-center">
 
                             <img class="allPhotos" id="photo_1" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_1" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_1" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_1" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_1" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_2" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_2" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_2" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_2" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_2" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_3" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_3" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_3" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_3" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_3" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_4" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_4" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_4" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_4" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_4" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_5" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_5" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_5" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_5" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_5" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_6" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_6" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_6" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_6" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_6" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_7" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_7" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_7" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_7" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_7" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_8" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_8" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_8" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_8" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_8" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_9" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_9" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_9" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_9" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_9" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_10" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_10" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_10" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_10" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_10" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_11" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_11" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_11" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_11" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_11" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_12" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_12" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_12" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_12" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_12" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_13" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_13" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_13" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_13" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_13" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_14" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_14" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_14" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_14" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_14" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_15" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_15" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_15" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_15" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_15" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_16" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_16" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_16" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_16" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_16" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_17" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_17" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_17" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_17" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_17" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_18" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_18" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_18" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_18" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_18" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_19" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_19" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_19" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_19" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_19" href="" target="_blank">---</a>.</h6>
                             <hr>
                             
                             <img class="allPhotos" id="photo_20" src="" alt="">
-                            <h6><a class="allPhotoSources" id="photoSource_20" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_20" href="" target="_blank">---</a>.</h6>
+                            <h6 class="pt-1"><a class="allPhotoSources" id="photoSource_20" href="" target="_blank">Photo</a> by <a class="allPhotographers" id="photographer_20" href="" target="_blank">---</a>.</h6>
                         </div>
                     </div>
 

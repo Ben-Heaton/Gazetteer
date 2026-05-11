@@ -76,7 +76,10 @@
             "capitalName" => $decoded[0]['capital'][0],
             "population" => $decoded[0]['population'],
             // array_key_first(), gets the first key of an array.
-            "currencyCode" => array_key_first($decoded[0]['currencies'])
+            "currencyCode" => array_key_first($decoded[0]['currencies']),
+            // area uses km2 as the units.
+            "area" => $decoded[0]['area'],
+            "continent" => $decoded[0]['region']
         );
     }
 

@@ -47,7 +47,7 @@ $(document).ready(function() {
         },
         error: function(err) {
             console.log(err);
-            //alert("GeoJSON Data Failed to Load");
+            alert("GeoJSON Data Failed to Load");
         }
     });
 
@@ -72,7 +72,9 @@ $(document).ready(function() {
             // A property and/or coords are missing from the loaded countryBorders.geo.json file. Replace it with new one.
         }
     });
-
+	
+	// UNCOMMENT OUT TO GET THE countryInfo areaInSqKm & continent values to work. Don't know why!
+	
     // IMPORTANT! Declared object for lookup later for exchange rate calculations.
     const currenciesData = {};
 
@@ -100,9 +102,11 @@ $(document).ready(function() {
         },
         error: function(err) {
             console.log(err);
+            alert("Populate exchange rates failed");
         }
     });
-
+	
+	    
     /* ==== GLOBAL VARIABLES ====================================================================================================================================== */
 
     // Global variables.
@@ -401,7 +405,10 @@ $(document).ready(function() {
         position: 'topleft'
 
     }).addTo(map);
-    countryInfoModalBtn.button.id = 'countryInfoModalBtn';
+
+    $('#countryInfoModal').on('hide.bs.modal', function () {
+        $(document.activeElement).blur();
+    });
 
     // 2. currencyExchangeModal
     let currencyExchangeModalBtn = L.easyButton("fa-money-bill-transfer fa-xl", function (btn, map) {
@@ -411,7 +418,10 @@ $(document).ready(function() {
         position: 'topleft'
 
     }).addTo(map);
-    currencyExchangeModalBtn.button.id = 'currencyExchangeModalBtn';
+
+    $('#currencyExchangeModal').on('hide.bs.modal', function () {
+        $(document.activeElement).blur();
+    });
 
     // 3. weatherForecastModal
     let weatherForecastModalBtn = L.easyButton("fa-cloud-sun-rain fa-xl", function (btn, map) {
@@ -421,7 +431,10 @@ $(document).ready(function() {
         position: 'topleft'
 
     }).addTo(map);
-    weatherForecastModalBtn.button.id = 'weatherForecastModalBtn';
+
+    $('#weatherForecastModal').on('hide.bs.modal', function () {
+        $(document.activeElement).blur();
+    });
 
     // 4. countryNewsModal
     let countryNewsModalBtn = L.easyButton("fa-newspaper fa-xl", function (btn, map) {
@@ -431,7 +444,10 @@ $(document).ready(function() {
         position: 'topleft'
 
     }).addTo(map);
-    countryNewsModalBtn.button.id = 'countryNewsModalBtn';
+
+    $('#countryNewsModal').on('hide.bs.modal', function () {
+        $(document.activeElement).blur();
+    });
 
     // 5. wikipediaEntriesModal
     let wikipediaEntriesModalBtn = L.easyButton("fa-brands fa-wikipedia-w fa-xl", function (btn, map) {
@@ -441,7 +457,10 @@ $(document).ready(function() {
         position: 'topleft'
 
     }).addTo(map);
-    wikipediaEntriesModalBtn.button.id = 'wikipediaEntriesModalBtn';
+
+    $('#wikipediaEntriesModal').on('hide.bs.modal', function () {
+        $(document.activeElement).blur();
+    });
 
     // 6. currentDateTimeModal
     let currentDateTimeModalBtn = L.easyButton("fa-calendar-day fa-xl", function (btn, map) {
@@ -451,7 +470,10 @@ $(document).ready(function() {
         position: 'topleft'
 
     }).addTo(map);
-    currentDateTimeModalBtn.button.id = 'currentDateTimeModalBtn';
+
+    $('#currentDateTimeModal').on('hide.bs.modal', function () {
+        $(document.activeElement).blur();
+    });
 
     // 7. publicHolidaysModal
     let publicHolidaysModalBtn = L.easyButton("fa-umbrella-beach fa-xl", function (btn, map) {
@@ -461,7 +483,10 @@ $(document).ready(function() {
         position: 'topleft'
 
     }).addTo(map);
-    publicHolidaysModalBtn.button.id = 'publicHolidaysModalBtn';
+
+    $('#publicHolidaysModal').on('hide.bs.modal', function () {
+        $(document.activeElement).blur();
+    });
 
     // 8. photosModal
     let photosModalBtn = L.easyButton("fa-images fa-xl", function (btn, map) {
@@ -471,7 +496,10 @@ $(document).ready(function() {
         position: 'topleft'
 
     }).addTo(map);
-    photosModalBtn.button.id = 'photosModalBtn';
+
+    $('#photosModal').on('hide.bs.modal', function () {
+        $(document.activeElement).blur();
+    });
 
     /* ---- Map Tile Layers / Checkboxes Layer Control ---------------------- */
 
@@ -493,15 +521,11 @@ $(document).ready(function() {
         
 		// get selected option value.
         let selectedOptionValue = $('#countrySelect').find(":selected").val();
-        console.log(`countrySelect value is ${selectedOptionValue}`);
+        //console.log(`countrySelect value is ${selectedOptionValue}`);
         
 		// Turn the iso_a2 code into the target country's capital coordinates (E.g. GB => London LatLng) then feed into reverse geocoding.
         getCapitalCoords(selectedOptionValue, function() {
-			//console.log("callback success");
-            
-			// Update the prior LatLng coords if needed for getCalculateDistance()
-            //previousCapitalLatLng = currentCapitalLatLng;
-            
+                        
             // Continue after currentCapitalLatLng has updated.
             clearPreviousCountry();
             reverseGeocoding(currentCapitalLatLng);
@@ -522,7 +546,11 @@ $(document).ready(function() {
 
 
     /* ==== FUNCTIONS ============================================================================================================================================= */
-
+	
+	function capitalizeFirstLetter(string) {
+	  return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+	
     function calculateExchangeTotal(currentCountryCurrencyCode) {
 		// Values
 		let baseCurrencyInt = $('#baseCurrencyInt').val();
@@ -541,20 +569,27 @@ $(document).ready(function() {
         
     }
 
-    // Obtains the user's coordinates, first country (and subsequent info) based on permission.
+    // Obtains the user's coordinates.
     function getUserLocation() {
         navigator.geolocation.getCurrentPosition(
             // Geolocation allowed.
             function success(position) {
-                //console.log("navigator allowed");
-				//currentLatLng = [position.coords.latitude, position.coords.longitude];
                 userLatLng = [position.coords.latitude, position.coords.longitude];
-                //updatePreviousLatLng(currentLatLng[0], currentLatLng[1]);
-                reverseGeocoding(userLatLng);
+                
+                // Send the users coords to reverse geolocation to get the country code the user is in.
+                reverseGeocodingClick(userLatLng, function() {
+                    
+                    // Turn the iso_a2 code into the target country's capital coordinates (E.g. GB => London LatLng) then feed into reverse geocoding.
+                    getCapitalCoords(currentAlphaTwoCodeUpper, function() {
+                                                
+                        // Continue after currentCapitalLatLng has updated.
+                        reverseGeocoding(currentCapitalLatLng);
+                    });
+                });
+                
             },
             // Geolocation denied. Default to select optiion 'Afghanistan'.
             function error() {
-				//console.log("navigator denied");
 				afganistanFirst = true;
                 $('#countrySelect').val("AF").change();
             }
@@ -571,12 +606,8 @@ $(document).ready(function() {
             
             // Turn the iso_a2 code into the target country's capital coordinates (E.g. GB => London LatLng) then feed into reverse geocoding.
             getCapitalCoords(currentAlphaTwoCodeUpper, function() {
-                    
-                // Update the prior LatLng coords if needed for getCalculateDistance()
-                //previousCapitalLatLng = currentCapitalLatLng;
-                    
+                                        
                 // Continue after currentCapitalLatLng has updated.
-                //clearPreviousCountry();
                 reverseGeocoding(currentCapitalLatLng);
             });
         });
@@ -622,10 +653,10 @@ $(document).ready(function() {
         /* ==== Info for Generic/Modals ==== */
         countryInfo(currentAlphaTwoCodeUpper);
         countryFlag(currentAlphaTwoCodeLower);
-        currentWeather(currentCapitalLatLng);
+		// currentWeather(), LOCATED INSIDE getCapitalCoords() due to timing issue.
         // weatherForecast(), LOCATED INSIDE currentWeather() due to timing issue.
         countryNews(currentAlphaTwoCodeLower);
-        wikipediaEntries(currentCountryName);
+        // wikipediaEntries(), LOCATED INSIDE countryInfo() due to timing issue.
         funFact(currentAlphaTwoCodeUpper);
         currentDateTime(currentCapitalLatLng);
         // publicHolidays(), LOCATED INSIDE countryInfo() due to timing issue.
@@ -779,7 +810,7 @@ $(document).ready(function() {
             // and because (in theory) both unescoSitesCoords & unescoSitesNames are the same length they keep in track.
             let name = unescoSitesNames[i];
             // Declaring a site marker.
-            let siteMarker = L.marker(coords, { icon: unescoSiteIcon }).bindPopup(name);                            
+            let siteMarker = L.marker(coords, { icon: unescoSiteIcon }).bindTooltip(name);                            
             // Adding the markers into the global cluster variable.
             sitesCluster.addLayer(siteMarker);
         }
@@ -789,7 +820,7 @@ $(document).ready(function() {
         for (let i = 0; i < intAirportsNames.length; i++) {
             let airportName = intAirportsNames[i];
             let airportCoords = intAirportsCoords[i];
-            let airportMarker = L.marker(airportCoords, { icon: airportIcon }).bindPopup(airportName);
+            let airportMarker = L.marker(airportCoords, { icon: airportIcon }).bindTooltip(airportName);
             airportsCluster.addLayer(airportMarker);
         }                        
     }
@@ -798,7 +829,7 @@ $(document).ready(function() {
         for (let i = 0; i < majorCitiesNames.length; i++) {
             let cityName = majorCitiesNames[i];
             let cityCoords = majorCitiesCoords[i];
-            let cityMarker = L.marker(cityCoords, { icon: cityIcon }).bindPopup(cityName);
+            let cityMarker = L.marker(cityCoords, { icon: cityIcon }).bindTooltip(cityName);
             majorCitiesCluster.addLayer(cityMarker);
         }
     }
@@ -840,7 +871,7 @@ $(document).ready(function() {
                 if (flag === true && afganistanFirst === true) {
 					console.log("Entered highlightCountryAndGetInfo, flag === true, afganistanFirst = true");
 					
-                    document.getElementById('countryName').innerHTML = result.name;
+                    // Fill in some info
                     document.getElementById('isoA2Code').innerHTML = result.iso_a2;
                     document.getElementById('isoA3Code').innerHTML = result.iso_a3;
 					
@@ -853,7 +884,6 @@ $(document).ready(function() {
                 else if (flag === true && afganistanFirst === false) {
 					console.log("Entered highlightCountryAndGetInfo, flag === true, afganistanFirst = false");
 										
-                    document.getElementById('countryName').innerHTML = result.name;
                     document.getElementById('isoA2Code').innerHTML = result.iso_a2;
                     document.getElementById('isoA3Code').innerHTML = result.iso_a3;
 					
@@ -866,8 +896,6 @@ $(document).ready(function() {
                 } else if (flag === false && afganistanFirst === false) {
 					console.log("Entered highlightCountryAndGetInfo, flag === false, afganistanFirst = false");
                     
-					// Populate some the info.
-                    document.getElementById('countryName').innerHTML = result.name;
                     document.getElementById('isoA2Code').innerHTML = result.iso_a2;
                     document.getElementById('isoA3Code').innerHTML = result.iso_a3;
 					
@@ -895,7 +923,7 @@ $(document).ready(function() {
             },
             error: function(error) {
                 console.log(error);
-                //alert("reverseGeocoding AJAX Call Error");
+                alert("reverseGeocoding AJAX Call Error");
             }
         });
     }
@@ -935,15 +963,17 @@ $(document).ready(function() {
                 isoA2Code: iso_a2 
             },
             success: function(result) {
-                currentCapitalName = result.capitalName;
+                previousCapitalLatLng = currentCapitalLatLng;
+				currentCapitalName = result.capitalName;
                 currentCapitalLatLng = [result.capitalLat, result.capitalLng];
-                //currentLatLng = [capitalLat, capitalLng];
+				currentWeather(currentCapitalLatLng);
+				console.log(currentCapitalLatLng);
                 callback();
             },
             // If response failure.
             error: function(error) {
                 console.log(error);
-                //alert("getCapitalCoords AJAX Call Error");
+                alert("getCapitalCoords AJAX Call Error");
             }
         });
     }
@@ -967,7 +997,7 @@ $(document).ready(function() {
             error: function(error) {
                 document.getElementById('countryFlag').src = "media/pictures/noFlag.png";
                 console.log(error);
-                //alert("countryFlag AJAX Call Error");
+                alert("countryFlag AJAX Call Error");
             }
         });
     }
@@ -987,9 +1017,9 @@ $(document).ready(function() {
             },
             // If response successful.
             success: function(result) {
-                
+				                
                 // Country Name
-                currentCountryName = result.countryname;
+                currentCountryName = result.countryName;
                 document.getElementById('countryName').innerHTML = currentCountryName;
 
                 // Capital City Name                
@@ -998,7 +1028,7 @@ $(document).ready(function() {
 
                 // Population Size                
                 currentCountryPopulation = result.population;
-                document.getElementById('population').innerHTML = currentCountryPopulation;
+                document.getElementById('population').innerHTML = numeral(currentCountryPopulation).format('0,0');
 
                 // Currency Code                
                 currentCountryCurrencyCode = result.currencyCode;
@@ -1009,15 +1039,24 @@ $(document).ready(function() {
                 $('#targetCurrencies').val("USD");
 				calculateExchangeTotal(currentCountryCurrencyCode);
 
-                // LEAVE CALLS HERE. Remember AJAX calls are asynchronous! 
-                countryPhotos(currentCountryName);
+                // Country Land Area (km2)
+                let countryArea = result.area;
+                document.getElementById('areaInSqKm').innerHTML = numeral(countryArea).format('0,0');
+
+                // Continent
+				let continentName = result.continent;
+                document.getElementById('continent').innerHTML = continentName;
+
+                // LEAVE CALLS HERE. Remember AJAX calls are asynchronous!
+				wikipediaEntries(currentCountryName);
                 publicHolidays(currentAlphaTwoCodeUpper);
+                countryPhotos(currentCountryName);
 
             },
             // If response failure.
             error: function(error) {
                 console.log(error);
-                //alert("countryInfo AJAX Call Error");
+                alert("countryInfo AJAX Call Error");
             }
         });
     }
@@ -1032,6 +1071,7 @@ $(document).ready(function() {
                 lng: LatLngArr[1]
             },
             success: function(result) {
+				console.log(result);
                 document.getElementById('weatherCity').innerHTML = currentCountryCapital;
                 document.getElementById('weatherIcon').src = `https://openweathermap.org/img/wn/${result.icon}@2x.png`;
                 document.getElementById('weatherMain').innerHTML = result.main;
@@ -1042,7 +1082,7 @@ $(document).ready(function() {
             },
             error: function(error) {
                 console.log(error);
-                //alert("currentWeather AJAX Call Error");
+                alert("currentWeather AJAX Call Error");
             }
         });
     }
@@ -1063,7 +1103,7 @@ $(document).ready(function() {
             },
             // If response successful.
             success: function(result) {
-                
+				
                 // Today
                 document.getElementById('forecastTodayDate').innerHTML = Date.parse("today").toString("ddd, d MMM");
                 document.getElementById('forecastTodayIcon').src = `https://openweathermap.org/img/wn/${result[0].icon}@2x.png`
@@ -1098,7 +1138,7 @@ $(document).ready(function() {
             // If response failure.
             error: function(error) {
                 console.log(error);
-                //alert("weatherForecast AJAX Call Error");
+                alert("weatherForecast AJAX Call Error");
             }
         });
     }
@@ -1113,36 +1153,129 @@ $(document).ready(function() {
                 countryCode: currentAlphaTwoCodeLower
             },
             success: function(newsResult) {
-                // Condition checks if the result contans an array.
-                if (!Array.isArray(newsResult)) {
-                    alert("Sorry, Country News cannot be loaded at this time.");
 
-                    // Otherwise populate the news modal.
-                } else {
-                    for (let article of newsResult) {
-                        // Establish variables and push relavent data to arrays.
-                        let holidaysTableBody = document.getElementById('holidaysTableBody');
-                        
-                        // For every element in holsDates (thus holsNames & holsDescs) add table rows and cells.
-                        for (let i = 0; i < result.holDates.length; i++) {
-                            let inNewRow = holidaysTableBody.insertRow();
-                            inNewRow.insertCell(0).textContent = Date.parse(result.holDates[i]).toString("dd-MM-yyyy");
-                            inNewRow.insertCell(1).textContent = result.holNames[i];
-                            inNewRow.insertCell(2).textContent = result.holDescs[i];
-                        }
-                    }
-                }
+                // News Item 1
+                document.getElementById('newsSource_1').innerHTML = newsResult[0].source;
+                if (newsResult[0] == null) {
+					document.getElementById('newsImage_1').src = 'media/pictures/newspaper_default.png';
+				} else {
+					document.getElementById('newsImage_1').src = newsResult[0].imageUrl;
+				}
+                document.getElementById('newsHeadline_1').href = newsResult[0].link;
+                document.getElementById('newsHeadline_1').innerHTML = newsResult[0].title;
+                document.getElementById('newsDesc_1').innerHTML = newsResult[0].description;
+				
+                // News Item 2
+				document.getElementById('newsSource_2').innerHTML = newsResult[1].source;
+                if (newsResult[1] == null) {
+					document.getElementById('newsImage_2').src = 'media/pictures/newspaper_default.png';
+				} else {
+					document.getElementById('newsImage_2').src = newsResult[1].imageUrl;
+				}
+                document.getElementById('newsHeadline_2').href = newsResult[1].link;
+                document.getElementById('newsHeadline_2').innerHTML = newsResult[1].title;
+                document.getElementById('newsDesc_2').innerHTML = newsResult[1].description;
+
+                // News Item 3
+				document.getElementById('newsSource_3').innerHTML = newsResult[2].source;
+                if (newsResult[2] == null) {
+					document.getElementById('newsImage_3').src = 'media/pictures/newspaper_default.png';
+				} else {
+					document.getElementById('newsImage_3').src = newsResult[2].imageUrl;
+				}
+                document.getElementById('newsHeadline_3').href = newsResult[2].link;
+                document.getElementById('newsHeadline_3').innerHTML = newsResult[2].title;
+                document.getElementById('newsDesc_3').innerHTML = newsResult[2].description;
+
+                // News Item 4
+				document.getElementById('newsSource_4').innerHTML = newsResult[3].source;
+                if (newsResult[3] == null) {
+					document.getElementById('newsImage_4').src = 'media/pictures/newspaper_default.png';
+				} else {
+					document.getElementById('newsImage_4').src = newsResult[3].imageUrl;
+				}
+                document.getElementById('newsHeadline_4').href = newsResult[3].link;
+                document.getElementById('newsHeadline_4').innerHTML = newsResult[3].title;
+                document.getElementById('newsDesc_4').innerHTML = newsResult[3].description;
+
+                // News Item 5
+				document.getElementById('newsSource_5').innerHTML = newsResult[4].source;
+                if (newsResult[4] == null) {
+					document.getElementById('newsImage_5').src = 'media/pictures/newspaper_default.png';
+				} else {
+					document.getElementById('newsImage_5').src = newsResult[4].imageUrl;
+				}
+                document.getElementById('newsHeadline_5').href = newsResult[4].link;
+                document.getElementById('newsHeadline_5').innerHTML = newsResult[4].title;
+                document.getElementById('newsDesc_5').innerHTML = newsResult[4].description;
+
+                // News Item 6
+				document.getElementById('newsSource_6').innerHTML = newsResult[5].source;
+                if (newsResult[5] == null) {
+					document.getElementById('newsImage_6').src = 'media/pictures/newspaper_default.png';
+				} else {
+					document.getElementById('newsImage_6').src = newsResult[5].imageUrl;
+				}
+                document.getElementById('newsHeadline_6').href = newsResult[5].link;
+                document.getElementById('newsHeadline_6').innerHTML = newsResult[5].title;
+                document.getElementById('newsDesc_6').innerHTML = newsResult[5].description;
+
+                // News Item 7
+				document.getElementById('newsSource_7').innerHTML = newsResult[6].source;
+                if (newsResult[6] == null) {
+					document.getElementById('newsImage_7').src = 'media/pictures/newspaper_default.png';
+				} else {
+					document.getElementById('newsImage_7').src = newsResult[6].imageUrl;
+				}
+                document.getElementById('newsHeadline_7').href = newsResult[6].link;
+                document.getElementById('newsHeadline_7').innerHTML = newsResult[6].title;
+                document.getElementById('newsDesc_7').innerHTML = newsResult[6].description;
+
+                // News Item 8
+				document.getElementById('newsSource_8').innerHTML = newsResult[7].source;
+                if (newsResult[7] == null) {
+					document.getElementById('newsImage_8').src = 'media/pictures/newspaper_default.png';
+				} else {
+					document.getElementById('newsImage_8').src = newsResult[7].imageUrl;
+				}
+                document.getElementById('newsHeadline_8').href = newsResult[7].link;
+                document.getElementById('newsHeadline_8').innerHTML = newsResult[7].title;
+                document.getElementById('newsDesc_8').innerHTML = newsResult[7].description;
+
+                // News Item 9
+				document.getElementById('newsSource_9').innerHTML = newsResult[8].source;
+                if (newsResult[8] == null) {
+					document.getElementById('newsImage_9').src = 'media/pictures/newspaper_default.png';
+				} else {
+					document.getElementById('newsImage_9').src = newsResult[8].imageUrl;
+				}
+                document.getElementById('newsHeadline_9').href = newsResult[8].link;
+                document.getElementById('newsHeadline_9').innerHTML = newsResult[8].title;
+                document.getElementById('newsDesc_9').innerHTML = newsResult[8].description;
+
+                // News Item 10
+				document.getElementById('newsSource_10').innerHTML = newsResult[9].source;
+                if (newsResult[9] == null) {
+					document.getElementById('newsImage_10').src = 'media/pictures/newspaper_default.png';
+				} else {
+					document.getElementById('newsImage_10').src = newsResult[9].imageUrl;
+				}
+                document.getElementById('newsHeadline_10').href = newsResult[9].link;
+                document.getElementById('newsHeadline_10').innerHTML = newsResult[9].title;
+                document.getElementById('newsDesc_10').innerHTML = newsResult[9].description;
+
             },
             error: function(error) {
                 console.log(error);
-                //alert("funFact AJAX Call Error");
+                alert("countryNews AJAX Call Error");
             }
         });
     }
 
     // API call to retrieve wikipedia articles. Specific to map clicks and coordinates. The capital's coords are used in country selection.
     function wikipediaEntries(countryName) {
-        $.ajax({
+        
+		$.ajax({
             url: "php/wikipediaEntries.php",
             type: 'POST',
             dataType: "json",   // jQuery does not automatically parse JSON unless you tell it to.
@@ -1150,59 +1283,84 @@ $(document).ready(function() {
                 country: countryName
             },
             success: function(result) {
-                let wikipediaBaseURL = "https://en.wikipedia.org/wiki/";
-                
-                document.getElementById('wikiThumb_1').src = result.thumbnail[0];
-                document.getElementById('wikiLink_1').innerHTML = result.title[0];
-                document.getElementById('wikiLink_1').href = wikipediaBaseURL + `${result.title[0]}`;
+				// This happens usually after geolocation is sucessful. The variable is going through fine, it just doesn't seem to work.
+				if (result[0] === undefined) {
+					$("#wikis").hide();
+					$("#wikisError").show();
+					
+					// All good. Carry on.
+				} else {
+					$("#wikis").show();
+					$("#wikisError").hide();
+					
+					let wikipediaBaseURL = "https://en.wikipedia.org/wiki/";
+					
+					document.getElementById('wikiThumb_1').src = result[0].thumbnail;
+					document.getElementById('wikiLink_1').innerHTML = result[0].title;
+					document.getElementById('wikiLink_1').href = wikipediaBaseURL + `${result[0].title}`;
+					let wikiDesc_1_result = result[0].description;
+					document.getElementById('wikiDesc_1').innerHTML = capitalizeFirstLetter(wikiDesc_1_result);
 
-                document.getElementById('wikiThumb_2').src = result.thumbnail[1];
-                document.getElementById('wikiLink_2').innerHTML = result.title[1];
-                document.getElementById('wikiLink_2').href = wikipediaBaseURL + `${result.title[1]}`;
+					document.getElementById('wikiThumb_2').src = result[1].thumbnail;
+					document.getElementById('wikiLink_2').innerHTML = result[1].title;
+					document.getElementById('wikiLink_2').href = wikipediaBaseURL + `${result[1].title}`;
+					let wikiDesc_2_result = result[1].description;
+					document.getElementById('wikiDesc_2').innerHTML = capitalizeFirstLetter(wikiDesc_2_result);
 
-                document.getElementById('wikiThumb_3').src = result.thumbnail[2];
-                document.getElementById('wikiLink_3').innerHTML = result.title[2];
-                document.getElementById('wikiLink_3').href = wikipediaBaseURL + `${result.title[2]}`;
+					document.getElementById('wikiThumb_3').src = result[2].thumbnail;
+					document.getElementById('wikiLink_3').innerHTML = result[2].title;
+					document.getElementById('wikiLink_3').href = wikipediaBaseURL + `${result[2].title}`;
+					let wikiDesc_3_result = result[2].description;
+					document.getElementById('wikiDesc_3').innerHTML = capitalizeFirstLetter(wikiDesc_3_result);
 
-                document.getElementById('wikiThumb_4').src = result.thumbnail[3];
-                document.getElementById('wikiLink_4').innerHTML = result.title[3];
-                document.getElementById('wikiLink_4').href = wikipediaBaseURL + `${result.title[3]}`;
+					document.getElementById('wikiThumb_4').src = result[3].thumbnail;
+					document.getElementById('wikiLink_4').innerHTML = result[3].title;
+					document.getElementById('wikiLink_4').href = wikipediaBaseURL + `${result[3].title}`;
+					let wikiDesc_4_result = result[3].description;
+					document.getElementById('wikiDesc_4').innerHTML = capitalizeFirstLetter(wikiDesc_4_result);
 
-                document.getElementById('wikiThumb_5').src = result.thumbnail[4];
-                document.getElementById('wikiLink_5').innerHTML = result.title[4];
-                document.getElementById('wikiLink_5').href = wikipediaBaseURL + `${result.title[4]}`;
+					document.getElementById('wikiThumb_5').src = result[4].thumbnail;
+					document.getElementById('wikiLink_5').innerHTML = result[4].title;
+					document.getElementById('wikiLink_5').href = wikipediaBaseURL + `${result[4].title}`;
+					let wikiDesc_5_result = result[4].description;
+					document.getElementById('wikiDesc_5').innerHTML = capitalizeFirstLetter(wikiDesc_5_result);
 
-                document.getElementById('wikiThumb_6').src = result.thumbnail[5];
-                document.getElementById('wikiLink_6').innerHTML = result.title[5];
-                document.getElementById('wikiLink_6').href = wikipediaBaseURL + `${result.title[5]}`;
+					document.getElementById('wikiThumb_6').src = result[5].thumbnail;
+					document.getElementById('wikiLink_6').innerHTML = result[5].title;
+					document.getElementById('wikiLink_6').href = wikipediaBaseURL + `${result[5].title}`;
+					let wikiDesc_6_result = result[5].description;
+					document.getElementById('wikiDesc_6').innerHTML = capitalizeFirstLetter(wikiDesc_6_result);
 
-                document.getElementById('wikiThumb_7').src = result.thumbnail[6];
-                document.getElementById('wikiLink_7').innerHTML = result.title[6];
-                document.getElementById('wikiLink_7').href = wikipediaBaseURL + `${result.title[6]}`;
+					document.getElementById('wikiThumb_7').src = result[6].thumbnail;
+					document.getElementById('wikiLink_7').innerHTML = result[6].title;
+					document.getElementById('wikiLink_7').href = wikipediaBaseURL + `${result[6].title}`;
+					let wikiDesc_7_result = result[6].description;
+					document.getElementById('wikiDesc_7').innerHTML = capitalizeFirstLetter(wikiDesc_7_result);
 
-                document.getElementById('wikiThumb_8').src = result.thumbnail[7];
-                document.getElementById('wikiLink_8').innerHTML = result.title[7];
-                document.getElementById('wikiLink_8').href = wikipediaBaseURL + `${result.title[7]}`;
+					document.getElementById('wikiThumb_8').src = result[7].thumbnail;
+					document.getElementById('wikiLink_8').innerHTML = result[7].title;
+					document.getElementById('wikiLink_8').href = wikipediaBaseURL + `${result[7].title}`;
+					let wikiDesc_8_result = result[7].description;
+					document.getElementById('wikiDesc_8').innerHTML = capitalizeFirstLetter(wikiDesc_8_result);
 
-                document.getElementById('wikiThumb_9').src = result.thumbnail[8];
-                document.getElementById('wikiLink_9').innerHTML = result.title[8];
-                document.getElementById('wikiLink_9').href = wikipediaBaseURL + `${result.title[8]}`;
+					document.getElementById('wikiThumb_9').src = result[8].thumbnail;
+					document.getElementById('wikiLink_9').innerHTML = result[8].title;
+					document.getElementById('wikiLink_9').href = wikipediaBaseURL + `${result[8].title}`;
+					let wikiDesc_9_result = result[8].description;
+					document.getElementById('wikiDesc_9').innerHTML = capitalizeFirstLetter(wikiDesc_9_result);
 
-                document.getElementById('wikiThumb_10').src = result.thumbnail[9];
-                document.getElementById('wikiLink_10').innerHTML = result.title[9];
-                document.getElementById('wikiLink_10').href = wikipediaBaseURL + `${result.title[9]}`;
-
-                /*
-                //Gets rid of any rows that don't contain information etc.
-                if (titleURLs.length < 10) {
-                    for (let i = titleURLs.length + 1; i <= 10; i++) {
-                        document.getElementById('wiki_' + i).style.display = 'none';
-                    }
-                }
-                */
+					document.getElementById('wikiThumb_10').src = result[9].thumbnail;
+					document.getElementById('wikiLink_10').innerHTML = result[9].title;
+					document.getElementById('wikiLink_10').href = wikipediaBaseURL + `${result[9].title}`;
+					let wikiDesc_10_result = result[9].description;
+					document.getElementById('wikiDesc_10').innerHTML = capitalizeFirstLetter(wikiDesc_10_result);
+				}
+			
             },
             error: function(error) {
-                console.log(error);
+				$("#wikis").hide();
+				$("#wikisError").show();
+                //console.log(error);
                 //alert("wikipediaEntries AJAX Call Error");
             }
         });
@@ -1218,11 +1376,11 @@ $(document).ready(function() {
                 countryCode: currentAlphaTwoCodeUpper 
             },
             success: function(result) {
-                document.getElementById('funFact').innerHTML = result.funFact;
+                document.getElementById('funFact').innerHTML = result.funFact;  // Note: Not all countrys have fun facts from API thus will go into AJAX failure.
             },
             error: function(error) {
-                document.getElementById('funFact').innerHTML = "Sorry. No fun fact is available!";
-                console.log(error);
+                document.getElementById('funFact').innerHTML = "Sorry. The API provided no fun fact.";
+                //console.log(error);
                 //alert("funFact AJAX Call Error");
             }
         });
@@ -1247,7 +1405,7 @@ $(document).ready(function() {
             },
             error: function(error) {
                 console.log(error);
-                //alert("currentDateTime AJAX Call Error");
+                alert("currentDateTime AJAX Call Error");
             }
         });
     }
@@ -1280,9 +1438,8 @@ $(document).ready(function() {
                 }
             },
             error: function(error) {
-                // Show error modal if gone wrong
                 console.log(error);
-                //alert("publicHolidays AJAX Call Error");
+                alert("publicHolidays AJAX Call Error");
             }
         });
 
@@ -1442,9 +1599,8 @@ $(document).ready(function() {
 
             },
             error: function(error) {
-                // Show error modal
                 console.log(error);
-                //alert("countryPhotos AJAX Call Error");
+                alert("countryPhotos AJAX Call Error");
             }
         });
 
@@ -1477,7 +1633,7 @@ $(document).ready(function() {
             },
             error: function(error) {
                 console.log(error);
-                //alert("getCalculateDistance AJAX Call Error");
+                alert("getCalculateDistance AJAX Call Error");
             }
         });
     }
@@ -1508,7 +1664,7 @@ $(document).ready(function() {
             },
             error: function(error) {
                 console.log(error);
-                //alert("getUnescoSites AJAX Call Error");
+                alert("getUnescoSites AJAX Call Error");
             }
         });
     }
@@ -1553,7 +1709,7 @@ $(document).ready(function() {
             },
             error: function(error) {
                 console.log(error);
-                //alert("getIntAirports AJAX Call Error");
+                alert("getIntAirports AJAX Call Error");
             }
         });
     }
@@ -1575,11 +1731,10 @@ $(document).ready(function() {
                 markMajorCities();
             },
             error: function(error) {
-                // Say this button thing doesn't work
                 console.log(error);
-                //alert("getMajorCities AJAX Call Error");
+                alert("getMajorCities AJAX Call Error");
             }
         });
-    }   
+    }
 
 }); // End of .ready()
