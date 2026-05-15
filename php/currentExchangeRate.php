@@ -4,8 +4,8 @@
     header('Content-Type: application/json; charset=UTF-8');
 
     /* !!!! COMMENT OUT IF RELIABLE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-    ini_set('display_errors', 'On');
-    error_reporting(E_ALL);
+    //ini_set('display_errors', 'On');
+    //error_reporting(E_ALL);
 
     // Getting access to my api key/
     $configPath = realpath(__DIR__ . '/../config/config.php');

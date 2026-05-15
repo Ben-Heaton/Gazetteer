@@ -46,8 +46,8 @@ $(document).ready(function() {
             });
         },
         error: function(err) {
-            console.log(err);
-            alert("GeoJSON Data Failed to Load");
+            //console.log(err);
+            //alert("GeoJSON Data Failed to Load");
         }
     });
 
@@ -67,13 +67,13 @@ $(document).ready(function() {
             }
         },
         error: function(err) {
-            console.log(err);
+            //console.log(err);
             $("#geoJsonErrorModal").modal("show");
             // A property and/or coords are missing from the loaded countryBorders.geo.json file. Replace it with new one.
         }
     });
 	
-	// UNCOMMENT OUT TO GET THE countryInfo areaInSqKm & continent values to work. Don't know why!
+	// UNCOMMENT OUT TO GET THE countryInfo areaInSqKm & continent values to work. Don't know why! Limit on AJAX API below is 150 per month.
 	
     // IMPORTANT! Declared object for lookup later for exchange rate calculations.
     const currenciesData = {};
@@ -101,8 +101,8 @@ $(document).ready(function() {
 
         },
         error: function(err) {
-            console.log(err);
-            alert("Populate exchange rates failed");
+            //console.log(err);
+            //alert("Populate exchange rates failed");
         }
     });
 	
@@ -858,8 +858,8 @@ $(document).ready(function() {
 				highlightCountryAndGetInfo(currentAlphaTwoCodeUpper);
             },
             error: function (error) {
-                console.log(error);
-                alert("reverseGeocoding AJAX Call Error");
+                //console.log(error);
+                //alert("reverseGeocoding AJAX Call Error");
             }
         });
     }
@@ -928,8 +928,8 @@ $(document).ready(function() {
                 });
             },
             error: function(error) {
-                console.log(error);
-                alert("reverseGeocoding AJAX Call Error");
+                //console.log(error);
+                //alert("reverseGeocoding AJAX Call Error");
             }
         });
     }
@@ -954,8 +954,8 @@ $(document).ready(function() {
                 callback();
             },
             error: function (error) {
-                console.log(error);
-                alert("reverseGeocoding AJAX Call Error");
+                //console.log(error);
+                //alert("reverseGeocoding AJAX Call Error");
             }
         });
     }
@@ -984,8 +984,8 @@ $(document).ready(function() {
             },
             // If response failure.
             error: function(error) {
-                console.log(error);
-                alert("getCapitalCoords AJAX Call Error");
+                //console.log(error);
+                //alert("getCapitalCoords AJAX Call Error");
             }
         });
     }
@@ -1008,8 +1008,8 @@ $(document).ready(function() {
             },
             error: function(error) {
                 document.getElementById('countryFlag').src = "media/pictures/noFlag.png";
-                console.log(error);
-                alert("countryFlag AJAX Call Error");
+                //console.log(error);
+                //alert("countryFlag AJAX Call Error");
             }
         });
     }
@@ -1067,8 +1067,8 @@ $(document).ready(function() {
             },
             // If response failure.
             error: function(error) {
-                console.log(error);
-                alert("countryInfo AJAX Call Error");
+                //console.log(error);
+                //alert("countryInfo AJAX Call Error");
             }
         });
     }
@@ -1092,8 +1092,8 @@ $(document).ready(function() {
                 weatherForecast(currentCapitalLatLng);
             },
             error: function(error) {
-                console.log(error);
-                alert("currentWeather AJAX Call Error");
+                //console.log(error);
+                //alert("currentWeather AJAX Call Error");
             }
         });
     }
@@ -1148,8 +1148,8 @@ $(document).ready(function() {
             },
             // If response failure.
             error: function(error) {
-                console.log(error);
-                alert("weatherForecast AJAX Call Error");
+                //console.log(error);
+                //alert("weatherForecast AJAX Call Error");
             }
         });
     }
@@ -1277,8 +1277,8 @@ $(document).ready(function() {
 
             },
             error: function(error) {
-                console.log(error);
-                alert("countryNews AJAX Call Error");
+                //console.log(error);
+                //alert("countryNews AJAX Call Error");
             }
         });
     }
@@ -1415,8 +1415,8 @@ $(document).ready(function() {
                 document.getElementById('dateTime_time').innerHTML = result.time;
             },
             error: function(error) {
-                console.log(error);
-                alert("currentDateTime AJAX Call Error");
+                //console.log(error);
+                //alert("currentDateTime AJAX Call Error");
             }
         });
     }
@@ -1449,8 +1449,8 @@ $(document).ready(function() {
                 }
             },
             error: function(error) {
-                console.log(error);
-                alert("publicHolidays AJAX Call Error");
+                //console.log(error);
+                //alert("publicHolidays AJAX Call Error");
             }
         });
 
@@ -1610,8 +1610,8 @@ $(document).ready(function() {
 
             },
             error: function(error) {
-                console.log(error);
-                alert("countryPhotos AJAX Call Error");
+                //console.log(error);
+                //alert("countryPhotos AJAX Call Error");
             }
         });
 
@@ -1643,8 +1643,8 @@ $(document).ready(function() {
                 markCalculateDistance();
             },
             error: function(error) {
-                console.log(error);
-                alert("getCalculateDistance AJAX Call Error");
+                //console.log(error);
+                //alert("getCalculateDistance AJAX Call Error");
             }
         });
     }
@@ -1678,8 +1678,8 @@ $(document).ready(function() {
                 }
             },
             error: function(error) {
-                console.log(error);
-                alert("getUnescoSites AJAX Call Error");
+                //console.log(error);
+                //alert("getUnescoSites AJAX Call Error");
             }
         });
     }
@@ -1727,8 +1727,8 @@ $(document).ready(function() {
                 }
             },
             error: function(error) {
-                console.log(error);
-                alert("getIntAirports AJAX Call Error");
+                //console.log(error);
+                //alert("getIntAirports AJAX Call Error");
             }
         });
     }
@@ -1750,8 +1750,8 @@ $(document).ready(function() {
                 markMajorCities();
             },
             error: function(error) {
-                console.log(error);
-                alert("getMajorCities AJAX Call Error");
+                //console.log(error);
+                //alert("getMajorCities AJAX Call Error");
             }
         });
     }

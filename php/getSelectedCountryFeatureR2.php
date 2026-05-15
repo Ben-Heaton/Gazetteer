@@ -7,8 +7,8 @@
     header('Content-Type: application/json; charset=UTF-8');
 
     /* ==== UNCOMMENT DURING DEV ============================================ */
-    ini_set('display_errors', 'On');
-    error_reporting(E_ALL);
+    //ini_set('display_errors', 'On');
+    //error_reporting(E_ALL);
 
     // Receive the variable sent from JavaScript AJAX.
     $isoA2 = $_POST['isoA2'];
