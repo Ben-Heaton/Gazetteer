@@ -112,6 +112,7 @@ $(document).ready(function() {
     // Global variables.
     let flag = true;
 	let afganistanFirst = false;
+	let homeIsoCode = null;
     let currentYear = null;
     let currentLatLng = [null, null];
     let userLatLng = [null, null];
@@ -386,14 +387,13 @@ $(document).ready(function() {
 
     /* ==== LISTENERS / EVENT HANDLERS ================================================================================================================================= */
 
-    let resetMapBtn = L.easyButton("fa-rotate-right fa-xl", function (btn, map) {
-        resetMap();
+    let homeBtn = L.easyButton("fa-solid fa-house fa-xl", function (btn, map) {
+        $('#countrySelect').val(`${homeIsoCode}`).change();
 
-    }, 'Reset Map', {
+    }, 'Return to Home/Default) Country', {
         position: 'topleft'
 
     }).addTo(map);
-    resetMapBtn.button.id = 'resetMapBtn';
 
     /* ---- Buttons for Modals ---------------------------------------------- */
 
@@ -427,7 +427,7 @@ $(document).ready(function() {
     let weatherForecastModalBtn = L.easyButton("fa-cloud-sun-rain fa-xl", function (btn, map) {
         $("#weatherForecastModal").modal("show");
 
-    }, 'Four Day Weather Forecast', {
+    }, 'Four Day Weather Forecast (Capital)', {
         position: 'topleft'
 
     }).addTo(map);
@@ -504,10 +504,10 @@ $(document).ready(function() {
     /* ---- Map Tile Layers / Checkboxes Layer Control ---------------------- */
 
     let overlayLayers = {
-        "Show Distance to Previous Country Point/Capital": calculateDistanceLayer,
+        "Show Distance to Previous Country Capital": calculateDistanceLayer,
         "Show UNESCO World Heritage Sites": sitesCluster,
         "Show International Airports": airportsCluster,
-        "Show Major Cities (Pop. >= 250,000)": majorCitiesCluster
+        //"Show Major Cities (Pop. >= 250,000)": majorCitiesCluster	// DISABLED BECAUSE API IS CRAP.
     };
 
     // control Button (for map tiles, radio buttons). First argument are for radio buttons, then second for checkboxes.
@@ -568,7 +568,7 @@ $(document).ready(function() {
         $('#exchangeResult').val(formattedExchangeTotal);
         
     }
-
+	
     // Obtains the user's coordinates.
     function getUserLocation() {
         navigator.geolocation.getCurrentPosition(
@@ -576,21 +576,22 @@ $(document).ready(function() {
             function success(position) {
                 userLatLng = [position.coords.latitude, position.coords.longitude];
                 
-                // Send the users coords to reverse geolocation to get the country code the user is in.
+                // Send the users coords to reverse geolocation to the user's country iso_a2 code.
                 reverseGeocodingClick(userLatLng, function() {
                     
                     // Turn the iso_a2 code into the target country's capital coordinates (E.g. GB => London LatLng) then feed into reverse geocoding.
                     getCapitalCoords(currentAlphaTwoCodeUpper, function() {
-                                                
-                        // Continue after currentCapitalLatLng has updated.
+						                                                
+                        // Reverse geocode the capital coords instead of the user's specific coords.
                         reverseGeocoding(currentCapitalLatLng);
                     });
                 });
                 
             },
-            // Geolocation denied. Default to select optiion 'Afghanistan'.
+            // Geolocation denied. Default to select option 'Afghanistan'.
             function error() {
 				afganistanFirst = true;
+				homeIsoCode = "AF";
                 $('#countrySelect').val("AF").change();
             }
         );
@@ -634,12 +635,7 @@ $(document).ready(function() {
             }
         });
     }
-
-    // Updates global variable. Used in markCalculateDistance().
-    function updatePreviousLatLng(lat, lng) {
-        previousLatLng = [lat, lng];
-    }
-
+	
     // Gets current year. Used in currentDateTime().
     function getCurrentYear() {
         let date = new Date();
@@ -666,7 +662,7 @@ $(document).ready(function() {
         getCalculateDistance(currentCapitalLatLng[0], currentCapitalLatLng[1], previousCapitalLatLng[0], previousCapitalLatLng[1]);
         getUnescoSites(currentAlphaTwoCodeUpper);
         getIntAirports(currentAlphaTwoCodeUpper);
-        getMajorCities(currentAlphaTwoCodeUpper);
+        //getMajorCities(currentAlphaTwoCodeUpper);	// DISABLED BECAUSE API IS CRAP.
 
     }
 
@@ -689,9 +685,10 @@ $(document).ready(function() {
 
     // Ensures that markers, marker variables etc are off/cleared before next country.
     function clearCboxesAndMarkers() {
-        
+        		
         // distance
         map.removeLayer(calculateDistanceLayer);
+		calculateDistanceLayer.clearLayers();	// Comment this line out to create a 'trailing effect'.
         distanceKilometersAndMiles = [];
         distanceMarkers = [];
         distanceLine = [];
@@ -717,16 +714,13 @@ $(document).ready(function() {
         majorCitiesCoords = [];
         majorCitiesMarkers = [];
 
-        // 'Resets' the checkboxes. methods like '.prop( "checked", false )' don't work.
-        //cBoxesOverlayControl.remove();
-        //cBoxesOverlayControl = L.control.layers(null, overlayLayers).addTo(map);
-        //cBoxesOverlayControl.getContainer().classList.add('cBoxesBtn');
     }
 
     function clearCountryInfoTables() {
         document.getElementById('holidaysTableBody').innerHTML = "";
     }
-
+	
+	/*
     // Provides a 'Hard' reset. Clears everything.
     function resetMap() {
         
@@ -786,24 +780,35 @@ $(document).ready(function() {
         // Reset map view.
         map.flyTo([0.00, 0.00], 3);
     }
+	*/
 
     // 3. Relevant data is passed through to the 'mark...' functions. These build the markers, layers, and clusters.
     function markCalculateDistance() {
-        let kilometers = distanceKilometersAndMiles[0];
+		
+		if (!currentCapitalLatLng || !previousCapitalLatLng || previousCapitalLatLng[0] === null) {
+			//console.log("Not enough data to calculate distance yet.");
+			return;
+		}
+		
+		let kilometers = distanceKilometersAndMiles[0];
         let miles = distanceKilometersAndMiles[1];
-        let distanceCoords = [currentLatLng, previousLatLng];
-
-        let markerCurrent = L.popup().setLatLng(currentLatLng).setContent(`Distance: ${kilometers} km (${miles} miles)`);
+        let distanceCoords = [currentCapitalLatLng, previousCapitalLatLng];
+		
+        let markerCurrent = L.popup().setLatLng(currentCapitalLatLng).setContent(`Distance: ${kilometers} km (${miles} miles)`);
         calculateDistanceLayer.addLayer(markerCurrent);
         
-        let markerPrevious = L.marker(previousLatLng, { icon: distanceIcon });
+        let markerPrevious = L.marker(previousCapitalLatLng, { icon: distanceIcon });
         calculateDistanceLayer.addLayer(markerPrevious);
         
         let currentDistanceLine = L.polyline(distanceCoords, {color: 'black'});
         calculateDistanceLayer.addLayer(currentDistanceLine);
-    }
 
+    }
+	
     function markUnescoSites() {
+		// Clears cluster to avoid value duplication.
+		sitesCluster.clearLayers();
+		
         // Interate over the length of unescoSitesCoords array.
         for (let i = 0; i < unescoSitesCoords.length; i++) {
             let coords = unescoSitesCoords[i];
@@ -815,8 +820,10 @@ $(document).ready(function() {
             sitesCluster.addLayer(siteMarker);
         }
     }
-
-    function markIntAirports() { 
+	
+    function markIntAirports() {
+		airportsCluster.clearLayers();
+		
         for (let i = 0; i < intAirportsNames.length; i++) {
             let airportName = intAirportsNames[i];
             let airportCoords = intAirportsCoords[i];
@@ -824,7 +831,7 @@ $(document).ready(function() {
             airportsCluster.addLayer(airportMarker);
         }                        
     }
-
+	
     function markMajorCities() {
         for (let i = 0; i < majorCitiesNames.length; i++) {
             let cityName = majorCitiesNames[i];
@@ -846,11 +853,9 @@ $(document).ready(function() {
             },
             success: function (result) {
 				currentAlphaTwoCodeUpper = result.countryCode;
-                currentAlphaTwoCodeLower = currentAlphaTwoCodeUpper.toLowerCase();
-
-                document.getElementById("languages").innerHTML = result.languages;
-
-                highlightCountryAndGetInfo(currentAlphaTwoCodeUpper);
+				currentAlphaTwoCodeLower = currentAlphaTwoCodeUpper.toLowerCase();
+				document.getElementById("languages").innerHTML = result.languages;
+				highlightCountryAndGetInfo(currentAlphaTwoCodeUpper);
             },
             error: function (error) {
                 console.log(error);
@@ -869,7 +874,7 @@ $(document).ready(function() {
             },
             success: function(result) {
                 if (flag === true && afganistanFirst === true) {
-					console.log("Entered highlightCountryAndGetInfo, flag === true, afganistanFirst = true");
+					//console.log("Entered highlightCountryAndGetInfo, flag === true, afganistanFirst = true");
 					
                     // Fill in some info
                     document.getElementById('isoA2Code').innerHTML = result.iso_a2;
@@ -882,8 +887,9 @@ $(document).ready(function() {
 					
 				}
                 else if (flag === true && afganistanFirst === false) {
-					console.log("Entered highlightCountryAndGetInfo, flag === true, afganistanFirst = false");
-										
+					//console.log("Entered highlightCountryAndGetInfo, flag === true, afganistanFirst = false");
+					
+					homeIsoCode = currentAlphaTwoCodeUpper;
                     document.getElementById('isoA2Code').innerHTML = result.iso_a2;
                     document.getElementById('isoA3Code').innerHTML = result.iso_a3;
 					
@@ -894,7 +900,7 @@ $(document).ready(function() {
                     setToCountryBounds(currentAlphaTwoCodeUpper);
 
                 } else if (flag === false && afganistanFirst === false) {
-					console.log("Entered highlightCountryAndGetInfo, flag === false, afganistanFirst = false");
+					//console.log("Entered highlightCountryAndGetInfo, flag === false, afganistanFirst = false");
                     
                     document.getElementById('isoA2Code').innerHTML = result.iso_a2;
                     document.getElementById('isoA3Code').innerHTML = result.iso_a3;
@@ -963,11 +969,17 @@ $(document).ready(function() {
                 isoA2Code: iso_a2 
             },
             success: function(result) {
-                previousCapitalLatLng = currentCapitalLatLng;
+                // Important: For getCalculateDistance()
+				previousCapitalLatLng = currentCapitalLatLng;
+				
+				// Updating variables.
 				currentCapitalName = result.capitalName;
                 currentCapitalLatLng = [result.capitalLat, result.capitalLng];
+				
+				// Leave here. Likely put here because of a timing issue.
 				currentWeather(currentCapitalLatLng);
-				console.log(currentCapitalLatLng);
+				
+				// Go back to other function that called it.
                 callback();
             },
             // If response failure.
@@ -1071,7 +1083,6 @@ $(document).ready(function() {
                 lng: LatLngArr[1]
             },
             success: function(result) {
-				console.log(result);
                 document.getElementById('weatherCity').innerHTML = currentCountryCapital;
                 document.getElementById('weatherIcon').src = `https://openweathermap.org/img/wn/${result.icon}@2x.png`;
                 document.getElementById('weatherMain').innerHTML = result.main;
@@ -1156,7 +1167,7 @@ $(document).ready(function() {
 
                 // News Item 1
                 document.getElementById('newsSource_1').innerHTML = newsResult[0].source;
-                if (newsResult[0] == null) {
+				if (newsResult[0].imageUrl == null) {
 					document.getElementById('newsImage_1').src = 'media/pictures/newspaper_default.png';
 				} else {
 					document.getElementById('newsImage_1').src = newsResult[0].imageUrl;
@@ -1167,7 +1178,7 @@ $(document).ready(function() {
 				
                 // News Item 2
 				document.getElementById('newsSource_2').innerHTML = newsResult[1].source;
-                if (newsResult[1] == null) {
+				if (newsResult[1].imageUrl == null) {
 					document.getElementById('newsImage_2').src = 'media/pictures/newspaper_default.png';
 				} else {
 					document.getElementById('newsImage_2').src = newsResult[1].imageUrl;
@@ -1178,7 +1189,7 @@ $(document).ready(function() {
 
                 // News Item 3
 				document.getElementById('newsSource_3').innerHTML = newsResult[2].source;
-                if (newsResult[2] == null) {
+				if (newsResult[2].imageUrl == null) {
 					document.getElementById('newsImage_3').src = 'media/pictures/newspaper_default.png';
 				} else {
 					document.getElementById('newsImage_3').src = newsResult[2].imageUrl;
@@ -1189,7 +1200,7 @@ $(document).ready(function() {
 
                 // News Item 4
 				document.getElementById('newsSource_4').innerHTML = newsResult[3].source;
-                if (newsResult[3] == null) {
+				if (newsResult[3].imageUrl == null) {
 					document.getElementById('newsImage_4').src = 'media/pictures/newspaper_default.png';
 				} else {
 					document.getElementById('newsImage_4').src = newsResult[3].imageUrl;
@@ -1200,7 +1211,7 @@ $(document).ready(function() {
 
                 // News Item 5
 				document.getElementById('newsSource_5').innerHTML = newsResult[4].source;
-                if (newsResult[4] == null) {
+				if (newsResult[4].imageUrl == null) {
 					document.getElementById('newsImage_5').src = 'media/pictures/newspaper_default.png';
 				} else {
 					document.getElementById('newsImage_5').src = newsResult[4].imageUrl;
@@ -1211,7 +1222,7 @@ $(document).ready(function() {
 
                 // News Item 6
 				document.getElementById('newsSource_6').innerHTML = newsResult[5].source;
-                if (newsResult[5] == null) {
+				if (newsResult[5].imageUrl == null) {
 					document.getElementById('newsImage_6').src = 'media/pictures/newspaper_default.png';
 				} else {
 					document.getElementById('newsImage_6').src = newsResult[5].imageUrl;
@@ -1222,7 +1233,7 @@ $(document).ready(function() {
 
                 // News Item 7
 				document.getElementById('newsSource_7').innerHTML = newsResult[6].source;
-                if (newsResult[6] == null) {
+				if (newsResult[6].imageUrl == null) {
 					document.getElementById('newsImage_7').src = 'media/pictures/newspaper_default.png';
 				} else {
 					document.getElementById('newsImage_7').src = newsResult[6].imageUrl;
@@ -1233,7 +1244,7 @@ $(document).ready(function() {
 
                 // News Item 8
 				document.getElementById('newsSource_8').innerHTML = newsResult[7].source;
-                if (newsResult[7] == null) {
+				if (newsResult[7].imageUrl == null) {
 					document.getElementById('newsImage_8').src = 'media/pictures/newspaper_default.png';
 				} else {
 					document.getElementById('newsImage_8').src = newsResult[7].imageUrl;
@@ -1244,7 +1255,7 @@ $(document).ready(function() {
 
                 // News Item 9
 				document.getElementById('newsSource_9').innerHTML = newsResult[8].source;
-                if (newsResult[8] == null) {
+				if (newsResult[8].imageUrl == null) {
 					document.getElementById('newsImage_9').src = 'media/pictures/newspaper_default.png';
 				} else {
 					document.getElementById('newsImage_9').src = newsResult[8].imageUrl;
@@ -1255,7 +1266,7 @@ $(document).ready(function() {
 
                 // News Item 10
 				document.getElementById('newsSource_10').innerHTML = newsResult[9].source;
-                if (newsResult[9] == null) {
+				if (newsResult[9].imageUrl == null) {
 					document.getElementById('newsImage_10').src = 'media/pictures/newspaper_default.png';
 				} else {
 					document.getElementById('newsImage_10').src = newsResult[9].imageUrl;
@@ -1655,6 +1666,10 @@ $(document).ready(function() {
 
                     // Otherwise push the sites & do function.
                 } else {
+					// Clears arrays to avoid value duplication.
+					unescoSitesNames = [];
+					unescoSitesCoords = [];
+					
                     for (let site of unescoResult) {
                         unescoSitesNames.push(site.siteName);
                         unescoSitesCoords.push([site.siteLat, site.siteLng]);
@@ -1689,7 +1704,11 @@ $(document).ready(function() {
                     alert("Sorry, airports cannot be loaded at this time.");
 
                 } else {
-                    // Sorting through the JSON for actual major international airports by comparing it against my JS internationalAirportsList object.
+					// Clears arrays to avoid value duplication.
+					intAirportsNames = [];
+					intAirportsCoords = [];
+					
+					// Sorting through the JSON for actual major international airports by comparing it against my JS internationalAirportsList object.
                     for (let airport of airportsResult) {
                         
                         // First sort.
