@@ -1015,6 +1015,7 @@ $(document).ready(function() {
     }
 
     // API call to retrieve a country's name, capital city name, population, and currency code used.
+	// IT IS IMPORTANT THAT THE API (IN ASSOCIATED PHP FILE) BE RELIABLE. OTHER APIS DEPEND ON THIS BIT WORKING!
     function countryInfo(currentAlphaTwoCodeUpper) {
         $.ajax({
             // Which file to run.
@@ -1030,9 +1031,9 @@ $(document).ready(function() {
             // If response successful.
             success: function(result) {
 				                
-                // Country Name
+				// Country Name
                 currentCountryName = result.countryName;
-                document.getElementById('countryName').innerHTML = currentCountryName;
+				document.getElementById('countryName').innerHTML = currentCountryName;
 
                 // Capital City Name                
                 currentCountryCapital = result.capitalName;
@@ -1056,8 +1057,8 @@ $(document).ready(function() {
                 document.getElementById('areaInSqKm').innerHTML = numeral(countryArea).format('0,0');
 
                 // Continent
-				let continentName = result.continent;
-                document.getElementById('continent').innerHTML = continentName;
+				let worldRegionName = result.worldRegion;
+                document.getElementById('worldRegion').innerHTML = worldRegionName;
 
                 // LEAVE CALLS HERE. Remember AJAX calls are asynchronous!
 				wikipediaEntries(currentCountryName);
@@ -1622,7 +1623,8 @@ $(document).ready(function() {
 
     // API call to calculate the distance between the current country location and the users last country selection.
     function getCalculateDistance(currentCapitalLat, currentCapitalLng, previousCapitalLat, previousCapitalLng) {
-        $.ajax({
+        
+		$.ajax({
             url: "php/calculateDistance.php",
             type: 'POST',
             data: {
@@ -1651,8 +1653,8 @@ $(document).ready(function() {
 
     // API call to retrieve a country's UNESCO world heritage sites.
     function getUnescoSites(currentAlphaTwoCodeUpper) {
-                
-        $.ajax({
+        
+		$.ajax({
             url: "php/unescoSites.php",
             type: 'POST',
             dataType: "json",
@@ -1660,7 +1662,9 @@ $(document).ready(function() {
                 alphaTwoUpper: currentAlphaTwoCodeUpper 
             },
             success: function(unescoResult) {
-                // Condition checks if the result contans an array.
+                console.log(unescoResult);
+				
+				// Condition checks if the result contans an array.
                 if (!Array.isArray(unescoResult)) {
                     alert("Sorry, UNESCO sites cannot be loaded at this time.");
 
@@ -1735,7 +1739,8 @@ $(document).ready(function() {
 
     // API call to retrieve a country's most populated cites. Data credited to 'GeoDB Cities' and 'rapidapi.com'.
     function getMajorCities(currentAlphaTwoCodeUpper) {
-        $.ajax({
+        
+		$.ajax({
             url: "php/majorCities.php",
             type: 'POST',
             dataType: "json",
