@@ -16,7 +16,7 @@
     $alphaTwoUpperSafe = strtoupper($alphaTwoUpper);
 
     // Insert the variable into the API URL address.
-    $url = "https://restcountries.com/v3.1/alpha/$alphaTwoUpperSafe";
+    $url = "https://countries.dev/alpha/$alphaTwoUpperSafe?fields=name%2Ccapital%2Cpopulation%2Ccurrencies%2Carea%2Cregion";
 
     /* ==== MAKING THE API CALL ============================================= */
 
@@ -46,6 +46,7 @@
     $infoArray = array();
 
     // First, is there a problem with the cURL?
+	// If the countries.dev API returns 404 then it means the ISOA2 dindn't go through correctly.
     if ($cURL_ERROR_NUMBER !== 0) {
         $infoArray = array(
             "curlErrorNumber" => $cURL_ERROR_NUMBER,
@@ -61,25 +62,16 @@
             "apiLastErrorMessage" => json_last_error_msg()
         );
 
-        // Third, the api call the api returned a error JSON
-        // Documention wasn't clear but an example of an error json is like so: {"message":"Bad Request","status":400}
-    } elseif (isset($decoded['message'])) {
-        $infoArray = array(
-            "jsonErrorStatus" => $decoded['status'],
-            "jsonErrorMessage" => $decoded['message']
-        );
-
         // All good. Extracting info.
     } else {
         $infoArray = array(
-            "countryName" => $decoded[0]['name']['common'],
-            "capitalName" => $decoded[0]['capital'][0],
-            "population" => $decoded[0]['population'],
-            // array_key_first(), gets the first key of an array.
-            "currencyCode" => array_key_first($decoded[0]['currencies']),
-            // area uses km2 as the units.
-            "area" => $decoded[0]['area'],
-            "continent" => $decoded[0]['region']
+            "countryName" => $decoded['name'],
+            "capitalName" => $decoded['capital'],
+            "population" => $decoded['population'],
+            "currencyCode" => $decoded['currencies'][0]['code'],
+            // The area value returned uses km2 units.
+            "area" => $decoded['area'],
+            "worldRegion" => $decoded['region']
         );
     }
 

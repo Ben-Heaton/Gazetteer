@@ -11,7 +11,7 @@
 
     // Recieve the variable from JavaScript AJAX and make it safe to use.
     $alphaTwoUpperSafe = trim(strtoupper($_POST['alphaTwoUpper']));
-
+	
     // Insert sent variable into the API URL address.
     $url = "https://data.unesco.org/api/explore/v2.1/catalog/datasets/whc001/records?limit=99&refine=iso_codes%3A%22$alphaTwoUpperSafe%22";
 
@@ -74,13 +74,13 @@
             "error" => "The iso_a2 country code did not feed through to the api."
         );
 
-        // All good. Extrating info.
+        // All good. Extracting needed info.
     } else {
         foreach($decoded['results'] as $unescoSite) {
             array_push($infoArray, [
                 "siteName" => $unescoSite['name_en'],
-                "siteLat" => $unescoSite['coordinates']['lat'],
-                "siteLng" => $unescoSite['coordinates']['lon']
+                "siteLat" => $unescoSite['geo_point_2d']['lat'],
+                "siteLng" => $unescoSite['geo_point_2d']['lon']
             ]); 
         }
     }
