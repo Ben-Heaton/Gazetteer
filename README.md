@@ -15,7 +15,7 @@ Fully functional as far as I'm aware. Sometimes the APIs used are discontinued, 
 I spent a lot of time on this application, so I'm unlikely to tinker with it further. However, further improvements would likely be in the backend. Examples are adding further resilience from broken API calls, and/or implementing more user friendly error messages in the case of failed information retrieval.
 
 ### Preview
-![](media/video/GazetteerGif.gif)
+![](media/video/gazetteerGif.gif)
 
 ### Try Here :joystick: :point_down:
 https://benheaton.dev/projects/GazetteerCopy/index.html
